@@ -38,7 +38,8 @@ public class SimpleLinkService implements LinkService {
             throw new NotFoundException(String.format("Ссылка по коду %s не найдена", code));
         }
         Link link = links.get(0);
-        linkRepository.upsert(link.getId(), link.getUrl(), link.getCode(), link.getCount(), link.getSite().getId());
+        link.setCount(link.getCount() + 1);
+        linkRepository.saveAndFlush(link);
         return link;
     }
 

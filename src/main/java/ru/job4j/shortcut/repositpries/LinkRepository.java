@@ -10,10 +10,4 @@ import java.util.List;
 
 public interface LinkRepository extends JpaRepository<Link, Integer> {
     List<Link> findByCode(String code);
-
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO links AS l (id, url, code, count, site_id) VALUES (?1, ?2, ?3, ?4, ?5) "
-            + "ON CONFLICT (id) DO UPDATE SET count = l.count + 1", nativeQuery = true)
-    void upsert(Integer id, String url, String code, Integer count, Integer siteId);
 }
